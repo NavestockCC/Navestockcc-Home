@@ -1,0 +1,64 @@
+@CHARSET "ISO-8859-1";
+
+/*
+ * -- BASE STYLES --
+ * Most of these are inherited from Base, but I want to change a few.
+ */
+ 
+ .wellGreenBanner{    
+	/*
+	<div> formatting
+	*/
+	background: #136D00;   
+    border-radius: 10px;
+    margin: 0px;
+    border: 0px;
+    padding: 0px; 
+ }
+ 
+ 
+ .vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;     /* Align the flex-items vertically */
+}
+
+
+
+ .horizontal-align {
+  display: flex;
+  flex-direction: column;
+}
+
+.horizontal-align > [class^="col-"],
+.horizontal-align > [class*=" col-"] {
+  display: flex;
+  flex-direction: column;
+}
+ 
+ .logo_img{
+	height:70px;
+	border-radius: 10px;
+}
+
+.clubName1{	
+	font-family: 'Copperplate Gothic', 'Copperplate Gothic Light';
+	color: #DDC82B;
+  	margin-bottom: 0px;	
+}
+
+.clubName2{
+	margin-left: 10px;
+	color: #DDC82B;
+	margin-top: 0px;
+}
+
+.navbar-white {
+    color: #000000;
+    background-color: #FFFFFF;
+}
