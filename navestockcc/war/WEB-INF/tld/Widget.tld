@@ -44,13 +44,25 @@
     	</attribute>
 	</tag>
 	
-		<tag>
+	<tag>
 		<name>ScoreCardWidget</name>
 		<tag-class>org.navestock.ctags.ScoreCardWidget</tag-class>
 		<body-content>empty</body-content>
 		<description>Match Score Card </description>
 		<attribute>
        		<name>matchId</name>
+       		<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+	</tag>
+	
+	<tag>
+		<name>PlayerDataTable</name>
+		<tag-class>org.navestock.ctags.StatsDataTable</tag-class>
+		<body-content>empty</body-content>
+		<description>HTML Script creating data table of player stats.</description>
+		<attribute>
+       		<name>playerId</name>
        		<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
     	</attribute>

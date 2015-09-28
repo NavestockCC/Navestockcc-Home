@@ -52,6 +52,17 @@ public class PlayerStats {
 
 	}
 
+	public String getResult(){
+		if(this.idTeamWinning > 0){
+			return this.WinningTeamName + " won by " + this.ResultDescription;
+		}else if(this.idTeamWinning == -3){ 
+			return "Draw";
+		} else{
+			return this.WinningTeamName + " " + this.ResultDescription;
+		}
+	}	
+	
+	
 	public int getIdMatch() {
 		return idMatch;
 	}

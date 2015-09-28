@@ -67,7 +67,7 @@ public class PlayerStatsServices {
 		BuildSql = BuildSql + " Stats.RunsConseded";
 		BuildSql = BuildSql + " From Stats inner join (Players, HowOut, teams, Matches)";
 		BuildSql = BuildSql + " ON (Stats.idPlayer=Players.idPlayer and Stats.idHowOut=HowOut.idHowOut and Stats.idTeam = teams.TeamId and Stats.idMatch=Matches.idMatch)";
-		BuildSql = BuildSql + " where Stats.idPlayer = " + idPlayer;
+		BuildSql = BuildSql + " where Stats.idPlayer = " + idPlayer + " and year(Matches.MatchDate) = year(now())";
 		BuildSql = BuildSql + " Order by Matches.MatchDate";
 
 		return BuildSql;
