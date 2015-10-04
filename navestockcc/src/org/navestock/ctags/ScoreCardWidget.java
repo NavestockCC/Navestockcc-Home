@@ -35,14 +35,14 @@ public class ScoreCardWidget extends SimpleTagSupport {
 				if(scl.get(i).getRunsScored() > 0){
 					DispBatting = true;
 				}
-				BattingCard = BattingCard +  "<tr><td class='scoreCardPlayer'>" + scl.get(i).getBatingOrder() + "</td><td c;ass='scoreCardPlayer'>" + scl.get(i).getPlayer() + "</td><td class='scoreCardOut'>" + scl.get(i).getHowOutDescription() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getRunsScored() + "</td></tr>";
+				BattingCard = BattingCard + "<tr><td class='scoreCardPlayer'>" + scl.get(i).getBatingOrder() + "</td><td class='scoreCardPlayer'><a href=playerstats.jsp?pId=" + scl.get(i).getIdPlayer() + ">" + scl.get(i).getPlayer() + "</a></td><td class='scoreCardOut'>" + scl.get(i).getHowOutDescription() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getRunsScored() + "</td></tr>";
 				
 				if(scl.get(i).getOversBowled() > 0){
 					DispBowling = true;
-					BowlingCard = BowlingCard + "<tr><td class=''scoreCardPlayer>" + scl.get(i).getPlayer() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getOversBowled() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getWickets() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getRunsConseded() + "</td></tr>";
+					BowlingCard = BowlingCard + "<a href=playerstats.jsp?pId=" + scl.get(i).getIdPlayer() + "><tr><td class=''scoreCardPlayer>" + scl.get(i).getPlayer() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getOversBowled() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getWickets() + "</td><td class='scoreCardNumbers'>" + scl.get(i).getRunsConseded() + "</td></tr></a>";
 					}	
 			}
-			
+		
 		//Display batting card	
 			out.println("<table class='scoreCardTable'>");
 			if(DispBatting){out.println("<tr class='scoreCardHeading'><td colspan='3' class='scoreCardHeadingCells'>Navestock Batting Stats</td><td class='scoreCardHeadingCells'>Runs</td></tr>");}

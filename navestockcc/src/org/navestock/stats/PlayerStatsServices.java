@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.navestock.dbcom.NavestockDbConnection;
@@ -29,10 +30,9 @@ public class PlayerStatsServices {
 				while (rs.next()) {
 					PlayerStats sc = new PlayerStats(rs.getInt("idMatch"), rs.getInt("OppositionTeamId"), rs.getString("OppositionName"), rs.getDate("MatchDate"), rs.getInt("idTeamWinning"), rs.getString("WinningTeamName"), rs.getString("ResultDescription"), rs.getInt("idPlayer"), rs.getString("Firstname"),
 							rs.getString("Lastname"), rs.getInt("idTeam"), rs.getString("TeamName"), rs.getInt("BatingOrder"), rs.getInt("RunsScored"), rs.getInt("idHowOut"),
-							rs.getString("HowOutDescription"), rs.getInt("OversBowled"), rs.getInt("Wickets"), rs.getInt("RunsConseded"));
+							rs.getString("HowOutDescription"), rs.getInt("OversBowled"), rs.getInt("Wickets"), rs.getInt("RunsConseded"), rs.getInt("OppositionRuns"), rs.getInt("OppositionWickets"), rs.getInt("NavestockRuns"), rs.getInt("NavestockWickets"));
 					StatsPerPlayer.add(sc);
-				}
-			
+				}	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +41,20 @@ public class PlayerStatsServices {
 		connObj.closeNavestockDbConnection(conn);
 		return StatsPerPlayer;
 	}	
+
+	public String playerBattingAvg(int idPlayer){
+		int runsSum = 0;
+		int outCount = 0;
+		
+		for (PlayerStats PS: StatsPerPlayer ){
+			runsSum = runsSum + PS.getRunsScored();
+			if(PS.getIdHowOut() > 0){
+				outCount = outCount + 1;
+			}
+		}
+		return null;		
+	}
+
 
 
 	private String SQL(int idPlayer){
@@ -53,6 +67,10 @@ public class PlayerStatsServices {
 		BuildSql = BuildSql + " Matches.idTeamWinning,";
 		BuildSql = BuildSql + " (select CONCAT(Club.ClubName, ' : ', teams.TeamName) from teams inner join(Club) on (teams.idClub = Club.idClub) where teams.TeamId = Matches.idTeamWinning) AS WinningTeamName ,";
 		BuildSql = BuildSql + " Matches.ResultDescription,";
+		BuildSql = BuildSql + " Matches.OppositionRuns,";
+		BuildSql = BuildSql + " Matches.OppositionWickets,";
+		BuildSql = BuildSql + " Matches.NavestockRuns,";
+		BuildSql = BuildSql + " Matches.NavestockWickets,";
 		BuildSql = BuildSql + " Stats.idPlayer,";
 		BuildSql = BuildSql + " Players.Firstname,";
 		BuildSql = BuildSql + " Players.Lastname,";

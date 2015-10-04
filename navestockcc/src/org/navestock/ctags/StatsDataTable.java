@@ -53,6 +53,7 @@ public class StatsDataTable extends SimpleTagSupport {
 			out.println("playerData.addColumn({id: 'oversBowled', label: 'Overs Bowled', type: 'number'});");
 			out.println("playerData.addColumn({id: 'wickets', label: 'Wickets', type: 'number'});");
 			out.println("playerData.addColumn({id: 'runsConseded', label: 'Runs Conseded', type: 'number'});");
+			out.println("playerData.addColumn({id: 'resultTooltip', label: 'Result', type: 'string', 'role': 'tooltip', 'p': {'html': true}});");
 			
 			for (int i = 0; i < PlayerDataTbl.size(); i++){
 			out.println("playerData.addRow("
@@ -62,7 +63,7 @@ public class StatsDataTable extends SimpleTagSupport {
 							+ "'," +  PlayerDataTbl.get(i).getIdTeam() + ", '" +  PlayerDataTbl.get(i).getTeamName() + "', " + PlayerDataTbl.get(i).getBatingOrder() 
 							+ ", " + PlayerDataTbl.get(i).getRunsScored() + ", " + PlayerDataTbl.get(i).getIdHowOut()
 							+ ", '" + PlayerDataTbl.get(i).getHowOutDescription() + "', " +  PlayerDataTbl.get(i).getOversBowled()
-							+ ", " +  PlayerDataTbl.get(i).getWickets() + ", " +  PlayerDataTbl.get(i).getRunsConseded() + "]"
+							+ ", " +  PlayerDataTbl.get(i).getWickets() + ", " +  PlayerDataTbl.get(i).getRunsConseded() + ", '" +  PlayerDataTbl.get(i).getResult() + "']"
 							+ ");");
 			}
 //			out.println("</script>");

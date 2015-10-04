@@ -12,6 +12,10 @@ public class PlayerStats {
 	private int idTeamWinning;
 	private String WinningTeamName;
 	private String ResultDescription;
+	private int oppositionRuns;
+	private int oppositionWickets;
+	private int navestockRuns;
+	private int navestockWickets;
 	private int idPlayer;
 	private String Firstname;
 	private String Lastname;
@@ -29,7 +33,7 @@ public class PlayerStats {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlayerStats(int idMtch, int OppstnTeamId, String OppstnName, Date MtchDate, int idTmWinning, String WinningTmName, String RsltDescription, int idPlyr, String Frstname, String Lstname, int idTm, String TmName, int BatingOrd, int RnsScored, int idHwOut, String HwOutDescription, int OvrsBowled, int Wickts, int RnsConseded) {
+	public PlayerStats(int idMtch, int OppstnTeamId, String OppstnName, Date MtchDate, int idTmWinning, String WinningTmName, String RsltDescription, int idPlyr, String Frstname, String Lstname, int idTm, String TmName, int BatingOrd, int RnsScored, int idHwOut, String HwOutDescription, int OvrsBowled, int Wickts, int RnsConseded, int oppostnRuns, int oppostnWickets, int navestckRuns, int navestckWickets ) {
 		this.idMatch = idMtch;
 		this.OppositionTeamId = OppstnTeamId;
 		this.OppositionName = OppstnName;
@@ -49,18 +53,49 @@ public class PlayerStats {
 		this.OversBowled = OvrsBowled;
 		this.Wickets = Wickts;
 		this.RunsConseded = RnsConseded;
-
+		this.oppositionRuns = oppostnRuns;
+		this.oppositionWickets = oppostnWickets;
+		this.navestockRuns = navestckRuns;
+		this.navestockWickets = navestckWickets;
 	}
 
 	public String getResult(){
+		String RsD = null;
+		
+		RsD = "<table>";
+		RsD = RsD + "<tr><td>" + this.OppositionName + " " + this.oppositionRuns + "/" + this.oppositionWickets + "</td></tr>";
+		RsD = RsD + "<tr><td>" + this.TeamName + " " + this.navestockRuns + "/" + this.navestockWickets + "</td></tr>";
+		
 		if(this.idTeamWinning > 0){
-			return this.WinningTeamName + " won by " + this.ResultDescription;
+			RsD = RsD + "<tr><td>" + this.WinningTeamName + " won by " + this.ResultDescription + "</td></tr>";
 		}else if(this.idTeamWinning == -3){ 
-			return "Draw";
+			RsD = RsD + "<tr><td>" + "Draw" + "</td></tr>";
 		} else{
-			return this.WinningTeamName + " " + this.ResultDescription;
+			RsD = RsD + "<tr><td>" + this.WinningTeamName + " " + this.ResultDescription + "</td></tr>";
 		}
+		RsD = RsD + "</table>";
+		
+		return RsD;
 	}	
+	
+	public String getbattingAnnottion(){
+		String annotation = null;
+		
+		 switch (this.idHowOut) {
+         case 0:  annotation = this.RunsScored + "*";
+         		  break;
+         case -1:  annotation = "DNB";
+		  		  break;
+         case -3:  annotation = this.RunsScored + "*";
+		  		  break;
+         default: annotation = " " + this.RunsScored + " ";
+                  break;
+     }
+		
+		return annotation;
+	};
+	
+	
 	
 	
 	public int getIdMatch() {
@@ -213,6 +248,38 @@ public class PlayerStats {
 
 	public void setRunsConseded(int runsConseded) {
 		RunsConseded = runsConseded;
+	}
+
+	public int getOppositionRuns() {
+		return oppositionRuns;
+	}
+
+	public void setOppositionRuns(int oppositionRuns) {
+		this.oppositionRuns = oppositionRuns;
+	}
+
+	public int getNavestockRuns() {
+		return navestockRuns;
+	}
+
+	public void setNavestockRuns(int navestockRuns) {
+		this.navestockRuns = navestockRuns;
+	}
+
+	public int getOppositionWickets() {
+		return oppositionWickets;
+	}
+
+	public void setOppositionWickets(int oppositionWickets) {
+		this.oppositionWickets = oppositionWickets;
+	}
+
+	public int getNavestockWickets() {
+		return navestockWickets;
+	}
+
+	public void setNavestockWickets(int navestockWickets) {
+		this.navestockWickets = navestockWickets;
 	}
 	
 	
