@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.navestock.dbcom.NavestockDbConnection;
@@ -12,7 +11,8 @@ import org.navestock.stats.PlayerStats;
 
 public class PlayerStatsServices {
 	
-	public static List<PlayerStats> StatsPerPlayer = new ArrayList<PlayerStats>();	
+	public static List<PlayerStats> StatsPerPlayer = new ArrayList<PlayerStats>();
+	public BattingStats battingStats = new BattingStats();
 
 	public PlayerStatsServices() {
 		// TODO Auto-generated constructor stub
@@ -42,16 +42,22 @@ public class PlayerStatsServices {
 		return StatsPerPlayer;
 	}	
 
-	public String playerBattingAvg(int idPlayer){
-		int runsSum = 0;
-		int outCount = 0;
-		
-		for (PlayerStats PS: StatsPerPlayer ){
-			runsSum = runsSum + PS.getRunsScored();
+	public BattingStats getPlayerBattingAvg(List<PlayerStats> StatsPPlayer){
+		battingStats.setRunsScored(0);
+		battingStats.setnOutCount(0);
+		battingStats.setnInnings(0);
+				
+		for (PlayerStats PS: StatsPPlayer ){
+			battingStats.setRunsScoredAdd(PS.getRunsScored());
 			if(PS.getIdHowOut() > 0){
-				outCount = outCount + 1;
+				battingStats.setnOutCountAdd(1);
+			}
+			if(PS.getIdHowOut()!=-3){
+				battingStats.setnInningsAdd(1);
 			}
 		}
+			battingStats.setAvrage();
+
 		return null;		
 	}
 

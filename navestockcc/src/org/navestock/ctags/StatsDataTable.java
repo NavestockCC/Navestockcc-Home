@@ -30,6 +30,7 @@ public class StatsDataTable extends SimpleTagSupport {
 		try {
 			PlayerStatsServices PlyerSatServices = new PlayerStatsServices();
 			List <PlayerStats> PlayerDataTbl = PlyerSatServices.getPlayerStats(PlayerId);
+			PlyerSatServices.getPlayerBattingAvg(PlayerDataTbl);
 			
 			if((PlayerDataTbl != null) && (!PlayerDataTbl.isEmpty())){
 //			out.println("<script type='text/javascript'>");		
