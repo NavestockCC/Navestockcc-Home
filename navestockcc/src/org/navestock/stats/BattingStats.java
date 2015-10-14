@@ -2,6 +2,8 @@ package org.navestock.stats;
 
 public class BattingStats {
 
+	private int idPlayer;
+	private String playerName;
 	private int statYear;
 	private int idTeam;
 	private String teamName;
@@ -15,14 +17,16 @@ public class BattingStats {
 		
 	}
 	
-	public BattingStats(int sYear, int teamId, String tName, int runScored, int Innings, int OutCount, Long avrg ) {
-		this.statYear = sYear;
+	public BattingStats(int playerId, String playerNme, int dt, int teamId, String tName, int runScored, int Innings, int OutCount, int battingAvg ) {
+		this.idPlayer = playerId;
+		this.playerName = playerNme;
+		this.statYear = dt;
 		this.idTeam = teamId;
 		this.teamName = tName;
 		this.runsScored = runScored;
 		this.nInnings = Innings;
 		this.nOutCount = OutCount;
-		this.avrage =  avrg;
+		this.avrage =  battingAvg;
 	}
 
 
@@ -90,7 +94,27 @@ public class BattingStats {
 	}
 
 	public void setAvrage() {
-		this.avrage = this.runsScored/this.nOutCount;
+		if(this.nOutCount!=0){
+			this.avrage = this.runsScored/this.nOutCount;
+		}else{
+			this.avrage = this.runsScored;
+		}
+	}
+
+	public int getIdPlayer() {
+		return idPlayer;
+	}
+
+	public void setIdPlayer(int idPlayer) {
+		this.idPlayer = idPlayer;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 
 }

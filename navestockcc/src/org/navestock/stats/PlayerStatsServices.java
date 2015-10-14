@@ -12,7 +12,7 @@ import org.navestock.stats.PlayerStats;
 public class PlayerStatsServices {
 	
 	public static List<PlayerStats> StatsPerPlayer = new ArrayList<PlayerStats>();
-	public BattingStats battingStats = new BattingStats();
+	public List<BattingStats> playerBattingStats = new ArrayList<BattingStats>();
 
 	public PlayerStatsServices() {
 		// TODO Auto-generated constructor stub
@@ -39,26 +39,55 @@ public class PlayerStatsServices {
 		}
 		
 		connObj.closeNavestockDbConnection(conn);
+		List<BattingStats> pBS = getPlayerBattingAvg(StatsPerPlayer);
+		
+		for(BattingStats BS: pBS ){
+			for(PlayerStats PS: StatsPerPlayer){
+				if(PS.getIdTeam()==BS.getIdTeam() && PS.getMatchYear()==BS.getStatYear()){
+					PS.setBattingAvrage(BS.getAvrage());
+				}
+				
+			}
+		}
+		
 		return StatsPerPlayer;
 	}	
 
-	public BattingStats getPlayerBattingAvg(List<PlayerStats> StatsPPlayer){
-		battingStats.setRunsScored(0);
-		battingStats.setnOutCount(0);
-		battingStats.setnInnings(0);
+	public List<BattingStats> getPlayerBattingAvg(List<PlayerStats> StatsPPlayer){
+		List<BattingStats> playerBattingStats = new ArrayList<BattingStats>();
 				
 		for (PlayerStats PS: StatsPPlayer ){
-			battingStats.setRunsScoredAdd(PS.getRunsScored());
-			if(PS.getIdHowOut() > 0){
-				battingStats.setnOutCountAdd(1);
-			}
-			if(PS.getIdHowOut()!=-3){
-				battingStats.setnInningsAdd(1);
-			}
-		}
-			battingStats.setAvrage();
-
-		return null;		
+			if(playerBattingStats.isEmpty()){
+				playerBattingStats.add(new BattingStats(PS.getIdPlayer(), PS.getFirstname() + " " + PS.getLastname(), PS.getMatchYear(), PS.getIdTeam(), PS.getTeamName(), 0, 0, 0, 0));}
+			for (BattingStats BS: playerBattingStats){
+				//If the Year and the Team are equal add the stats to an existing array record. 
+				if((BS.getStatYear() == PS.getMatchYear()) && (BS.getIdTeam() == PS.getIdTeam())){
+					//Calculate averages
+					BS.setRunsScoredAdd(PS.getRunsScored());
+					if(PS.getIdHowOut() > 0){
+						BS.setnOutCountAdd(1);
+						}
+					if(PS.getIdHowOut()!=-3){
+						BS.setnInningsAdd(1);
+						}
+					BS.setAvrage();
+					break;
+					}
+				//If the Year and the Team are not equal create a new array record and add the stats to the new record
+				else{
+					int outCountAdd = 0;
+					int inningsCount = 0;
+					if(PS.getIdHowOut() > 0){
+						outCountAdd = 1;
+						}
+					if(PS.getIdHowOut()!=-3){
+						inningsCount = 1;
+						}
+					playerBattingStats.add(new BattingStats(PS.getIdPlayer(), PS.getFirstname() + " " + PS.getLastname(), PS.getMatchYear(), PS.getIdTeam(), PS.getTeamName(), PS.getRunsScored(), inningsCount, outCountAdd, PS.getRunsScored() ));
+					}			
+				}
+		    }
+		return playerBattingStats;		
 	}
 
 

@@ -1,6 +1,7 @@
 package org.navestock.stats;
 
 import java.util.Date;
+import org.joda.time.DateTime;
 
 
 public class PlayerStats {
@@ -28,6 +29,7 @@ public class PlayerStats {
 	private int OversBowled;
 	private int Wickets;
 	private int RunsConseded;
+	private long battingAvrage;
 	
 	public PlayerStats() {
 		// TODO Auto-generated constructor stub
@@ -112,6 +114,11 @@ public class PlayerStats {
 
 	public Date getMatchDate() {
 		return MatchDate;
+	}
+	
+	public int getMatchYear(){
+		DateTime dt = new DateTime(this.MatchDate);
+		return dt.getYear();
 	}
 
 	public int getIdTeamWinning() {
@@ -280,6 +287,14 @@ public class PlayerStats {
 
 	public void setNavestockWickets(int navestockWickets) {
 		this.navestockWickets = navestockWickets;
+	}
+
+	public long getBattingAvrage() {
+		return battingAvrage;
+	}
+
+	public void setBattingAvrage(long battingAvrage) {
+		this.battingAvrage = battingAvrage;
 	}
 	
 	
