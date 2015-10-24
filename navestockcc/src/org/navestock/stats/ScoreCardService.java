@@ -13,9 +13,7 @@ public class ScoreCardService {
 
 	public static List<ScoreCard> ScoreCards = new ArrayList<ScoreCard>();
 	
-	public ScoreCardService() {
-		// TODO Auto-generated constructor stub
-	}
+	public ScoreCardService() {}
 	
 	public List<ScoreCard> getScoreCard(int idMtch){
 		List<ScoreCard> ScoreCards = new ArrayList<ScoreCard>();
@@ -29,16 +27,18 @@ public class ScoreCardService {
 				while (rs.next()) {
 					ScoreCard sc = new ScoreCard(rs.getInt("idClub"), rs.getString("ClubName"), rs.getInt("TeamId"),rs.getString("TeamName"), rs.getInt("idPlayer"), rs.getString("Firstname"), rs.getString("Lastname"), rs.getInt("BatingOrder"),rs.getInt("RunsScored"), rs.getInt("idHowOut"), rs.getString("HowOutDescription"), rs.getInt("OversBowled"), rs.getInt("Wickets"), rs.getInt("RunsConseded"), rs.getInt("idMatch"));
 					ScoreCards.add(sc);
-				}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+				}			
+			} 
+		catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
-		connObj.closeNavestockDbConnection(conn);
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}
 		return ScoreCards;
-	}
+		}
 	
 	private String SQL(int idMtch){
 		String BuildSql = null;

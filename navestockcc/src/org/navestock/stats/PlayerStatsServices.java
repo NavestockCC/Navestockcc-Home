@@ -33,12 +33,19 @@ public class PlayerStatsServices {
 							rs.getString("HowOutDescription"), rs.getInt("OversBowled"), rs.getInt("Wickets"), rs.getInt("RunsConseded"), rs.getInt("OppositionRuns"), rs.getInt("OppositionWickets"), rs.getInt("NavestockRuns"), rs.getInt("NavestockWickets"));
 					StatsPerPlayer.add(sc);
 				}	
-		} catch (SQLException e) {
+			} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}
 		
-		connObj.closeNavestockDbConnection(conn);
+		
+		
 		List<BattingStats> pBS = getPlayerBattingAvg(StatsPerPlayer);
 		
 		for(BattingStats BS: pBS ){

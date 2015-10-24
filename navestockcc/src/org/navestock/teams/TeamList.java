@@ -30,19 +30,27 @@ public class TeamList {
 	
 		NavestockDbConnection connObj = new NavestockDbConnection();
 		Connection conn = connObj.getNavestockDbConnection();
-
-		ResultSet rs = conn.createStatement().executeQuery(SQL);
-		rs.first();
-		if (rs != null){
-			do {
-				Team team = new Team();
-				team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
-				TList.add(team);
-			} while (rs.next());
-			
-		}	
-		    connObj.closeNavestockDbConnection(conn);
+		
+		try{
+			ResultSet rs = conn.createStatement().executeQuery(SQL);
+			rs.first();
+			if (rs != null){
+				do {
+					Team team = new Team();
+					team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
+					TList.add(team);
+					}
+				while (rs.next());			
+				}
+			}
+		catch(SQLException e){
+			e.printStackTrace();
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}
 			return TList;
+		}
 	}
-
-}

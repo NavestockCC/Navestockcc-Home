@@ -32,8 +32,10 @@ public class NavestockDbConnection {
 		} else {
               // Local MySQL instance to use during development.
 				Class.forName("com.mysql.jdbc.Driver");
-			  url = "jdbc:mysql://173.194.255.10:3306/navestockdb";
-			  conn = DriverManager.getConnection(url, "root", "Nav1768");
+			  // IPv4:url = "jdbc:mysql://173.194.255.10:3306/navestockdb";
+			  // IPv6:
+				url = "jdbc:mysql://address=(protocol=tcp)(host=[2001:4860:4864:1:5177:c94a:859c:cd6c])(port=3306)/navestockdb";
+				conn = DriverManager.getConnection(url, "root", "Nav1768");
 		}		
 	} catch (ClassNotFoundException | SQLException e) {
 		e.printStackTrace();

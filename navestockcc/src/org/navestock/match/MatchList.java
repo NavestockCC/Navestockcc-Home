@@ -38,15 +38,18 @@ public class MatchList {
 					Match matchList = new Match();
 					matchList.setMatch(rs.getInt("idMatch"), rs.getInt("NavestockTeamId"), rs.getString("NavestockTeamName"), rs.getInt("OppositionTeamId"), rs.getString("OppositionTeamName"), rs.getDate("MatchDate"), rs.getString("MatchStartTime"), rs.getString("Ground"), rs.getString("GroundPostCode"), rs.getString("HomeOrAway"));
 					MatchList.add(matchList);
-				} while (rs.next());				
+					} 
+				while (rs.next());				
+				} 
 			} 
-			    connObj.closeNavestockDbConnection(conn);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}		
 		return MatchList;
 	}
 	

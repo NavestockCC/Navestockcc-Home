@@ -146,7 +146,21 @@
 		          pieHole: 0.3,
 		};
 		
-		
+//Bowling Stats
+	var tblBowlingWickRuns = new google.visualization.DataView(playerData);
+		tblBowlingWickRuns.setColumns(['oppositionName', 'runsConseded', 'wickets', 'oppositionName', 'oversBowled']);
+	
+		var BowlingWickRunsOptions = {
+				height: '500',
+				vAxis: {viewWindowMode : 'explicit',
+						viewWindow:{min:'-1'}
+						},
+				bubble: {
+					textStyle:{
+						fontSize:'10'
+							}
+						}
+			};
 		
 		
 		
@@ -164,10 +178,23 @@
       
       var seasonchart = new google.visualization.ComboChart(document.getElementById('season_div'));
       seasonchart.draw(seasonView, seasonOptions);
+      
+      var chrtBowlingWickRuns = new google.visualization.BubbleChart(document.getElementById('bowling_div'));
+		chrtBowlingWickRuns.draw(tblBowlingWickRuns, BowlingWickRunsOptions);
       }
       
 		function runsSC(dataTable, rowNum){
-			  return " " + dataTable.getValue(rowNum, 12)+ " " ;
+				var txtReturn = "";
+				if(dataTable.getValue(rowNum, 13) == -1){
+					txtReturn =  "DNB"; 
+				} else if(dataTable.getValue(rowNum, 13) == 0 || dataTable.getValue(rowNum, 13) == -2 ){
+					txtReturn =  " " + dataTable.getValue(rowNum, 12)+ "*" ; 
+				} 
+				else {
+					txtReturn =  " " + dataTable.getValue(rowNum, 12)+ " " ; 
+				};
+				
+			  return txtReturn;
 			}
 		
 		function resultsTxt(dataTable, rowNum){
@@ -187,8 +214,8 @@
 				<br>
 				<div id="table_div"></div>
 				<br>
-				
 				<br>
+				<div id="bowling_div"></div>
 				
 			</div>
 		</div>		

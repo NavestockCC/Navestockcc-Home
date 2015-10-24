@@ -33,17 +33,24 @@ import org.navestock.dbcom.NavestockDbConnection;
 			NavestockDbConnection connObj = new NavestockDbConnection();
 			Connection conn = connObj.getNavestockDbConnection();
 			
-			CallableStatement callableStatement =conn.prepareCall("{call addTeam(?,?,?,?,?)}");
-			callableStatement.setInt("tId", tId );
-			callableStatement.setString("tName", tName);
-			callableStatement.setString("tClub", tClub);
-			callableStatement.setString("tLeague", tLeague);
-			callableStatement.setString("tPostCode", tPostCode);
-			
-			callableStatement.executeQuery();
-
-			connObj.closeNavestockDbConnection(conn);
-		}
+			try{
+				CallableStatement callableStatement =conn.prepareCall("{call addTeam(?,?,?,?,?)}");
+				callableStatement.setInt("tId", tId );
+				callableStatement.setString("tName", tName);
+				callableStatement.setString("tClub", tClub);
+				callableStatement.setString("tLeague", tLeague);
+				callableStatement.setString("tPostCode", tPostCode);
+				callableStatement.executeQuery();
+				}
+			catch(SQLException e){
+				e.printStackTrace();
+				}
+			finally{
+				if(conn!=null){
+					connObj.closeNavestockDbConnection(conn);
+					}
+				}
+			}
 
 
 		/*

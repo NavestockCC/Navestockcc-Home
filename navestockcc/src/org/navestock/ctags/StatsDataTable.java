@@ -103,8 +103,6 @@ public class StatsDataTable extends SimpleTagSupport {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
 
 }

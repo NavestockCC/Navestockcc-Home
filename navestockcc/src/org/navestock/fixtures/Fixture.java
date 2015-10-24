@@ -148,8 +148,6 @@ private String SelectFictreSQL(int matchId){
 		
 	return "(" + Select + " " + From + " " + Where + " " + OrderBy + ")";
 }
-
-	
 	
 	
 // Getter methods
@@ -187,11 +185,17 @@ private String SelectFictreSQL(int matchId){
 				this.setOppositionRuns(rs.getInt("OppositionRuns"));
 				this.setOppositionWickets(rs.getInt("OppositionWickets"));
 			}
-		} catch (SQLException e) {
+			} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+			}
 		}
-		connObj.closeNavestockDbConnection(conn);
+		
 	}
 	
 		

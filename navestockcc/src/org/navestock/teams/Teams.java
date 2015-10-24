@@ -35,47 +35,62 @@ import org.navestock.dbcom.NavestockDbConnection;
 		/**
 		 * Create and update teams
 		 */		
-		public void setTeamDB(int tId, String tName, String tClub, String tLeague, String tPostCode) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+		public void setTeamDB(int tId, String tName, String tClub, String tLeague, String tPostCode){
 
 			NavestockDbConnection connObj = new NavestockDbConnection();
 			Connection conn = connObj.getNavestockDbConnection();
-			
-			CallableStatement callableStatement =conn.prepareCall("{call addTeam(?,?,?,?,?)}");
-			callableStatement.setInt("tId", tId );
-			callableStatement.setString("tName", tName);
-			callableStatement.setString("tClub", tClub);
-			callableStatement.setString("tLeague", tLeague);
-			callableStatement.setString("tPostCode", tPostCode);
-			
-			callableStatement.executeQuery();
-
-			connObj.closeNavestockDbConnection(conn);
-		}
+			try{
+				CallableStatement callableStatement =conn.prepareCall("{call addTeam(?,?,?,?,?)}");
+				callableStatement.setInt("tId", tId );
+				callableStatement.setString("tName", tName);
+				callableStatement.setString("tClub", tClub);
+				callableStatement.setString("tLeague", tLeague);
+				callableStatement.setString("tPostCode", tPostCode);
+				callableStatement.executeQuery();
+				}
+			catch (SQLException e) {
+				e.printStackTrace();
+				}
+			finally{
+				if(conn!=null){
+					connObj.closeNavestockDbConnection(conn);
+					}
+				}
+			}
 
 
 
 		
-		public ArrayList<Team> getTeamList() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+		public ArrayList<Team> getTeamList(){
 		
 			NavestockDbConnection connObj = new NavestockDbConnection();
 			Connection conn = connObj.getNavestockDbConnection();
-
-			ResultSet rs = conn.createStatement().executeQuery(
-				    "SELECT * FROM teams ORDER BY Club, TeamName");
-			rs.first();
-			if (rs != null){
-				do {
-					Team team = new Team();
-					team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
-					TList.add(team);
-				} while (rs.next());
-				
-			}	
-			    connObj.closeNavestockDbConnection(conn);
+			
+			try{
+				ResultSet rs = conn.createStatement().executeQuery(
+						"SELECT * FROM teams ORDER BY Club, TeamName");
+				rs.first();
+				if (rs != null){
+					do {
+						Team team = new Team();
+						team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
+						TList.add(team);
+							}
+						while (rs.next());
+						}
+					}
+			catch (SQLException e) {
+				e.printStackTrace();
+				}
+			finally{
+					if(conn!=null){
+						connObj.closeNavestockDbConnection(conn);
+						}
+					}
 				return TList;
-		}		
+			}		
 		
-		public ArrayList<Team> getTeamList(String tClub) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+		public ArrayList<Team> getTeamList(String tClub){
 			String SQL = null;
 			if(tClub.equalsIgnoreCase("Navestock")){
 				SQL = "SELECT * FROM teams WHERE Club = 'Navestock' ORDER BY Club, TeamName";
@@ -91,19 +106,28 @@ import org.navestock.dbcom.NavestockDbConnection;
 			NavestockDbConnection connObj = new NavestockDbConnection();
 			Connection conn = connObj.getNavestockDbConnection();
 
-			ResultSet rs = conn.createStatement().executeQuery(SQL);
-			
-			rs.first();
-			if (rs != null){
-				do {
-					Team team = new Team();
-					team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
-					TList.add(team);
-				} while (rs.next());
-				
-			}	
-			    connObj.closeNavestockDbConnection(conn);
-				return TList;
+			try{
+				ResultSet rs = conn.createStatement().executeQuery(SQL);
+	
+				rs.first();
+				if (rs != null){
+					do {
+						Team team = new Team();
+						team.setTeam(rs.getInt("TeamId"), rs.getString("TeamName"), rs.getString("Club"), rs.getString("League"), rs.getString("HomeGroundPostCode"));
+						TList.add(team);
+						} 
+					while (rs.next());				
+					}
+				}
+			catch (SQLException e) {
+				e.printStackTrace();
+				}
+			finally{
+					if(conn!=null){
+						connObj.closeNavestockDbConnection(conn);
+						}
+					}
+			return TList;
 		}			
 		
 		

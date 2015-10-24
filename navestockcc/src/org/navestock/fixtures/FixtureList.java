@@ -30,15 +30,17 @@ public class FixtureList {
 								rs.getInt("OppositionRuns"), rs.getInt("OppositionWickets"), rs.getInt("idTeamWinning") , rs.getString("ResultDescription"), rs.getString("WinningTeamName"));
 						FixtureList.add(fixturedetails);
 					} while (rs.next());				
-				} 
-				    connObj.closeNavestockDbConnection(conn);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				   } 
+				 } 
+			catch (SQLException e) {
 				e.printStackTrace();
-			}
-//			return FixtureList;
-		}		
+				}
+			finally{
+				if(conn!=null){
+					connObj.closeNavestockDbConnection(conn);
+					}
+				}
+			}		
 	
 	public int getSize(){
 		return FixtureList.size();

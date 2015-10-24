@@ -42,17 +42,24 @@ public class Match {
 		NavestockDbConnection connObj = new NavestockDbConnection();
 		Connection conn = connObj.getNavestockDbConnection();
 		
-		CallableStatement callableStatement =conn.prepareCall("{call addMatch(?,?,?,?,?)}");
-		callableStatement.setInt("mNavestockTeamId", mNavestockTeamId);
-		callableStatement.setInt("mOppositionTeamId", mOppositionTeamId);
-		callableStatement.setDate("mMatchDate", mMatchDate);
-		callableStatement.setString("mMatchStartTime", mMatchStartTime);
-		callableStatement.setString("mHomeOrAway", mHomeOrAway);
-		
-		callableStatement.executeQuery();
-
-		connObj.closeNavestockDbConnection(conn);
-	}
+		try{
+			CallableStatement callableStatement =conn.prepareCall("{call addMatch(?,?,?,?,?)}");
+			callableStatement.setInt("mNavestockTeamId", mNavestockTeamId);
+			callableStatement.setInt("mOppositionTeamId", mOppositionTeamId);
+			callableStatement.setDate("mMatchDate", mMatchDate);
+			callableStatement.setString("mMatchStartTime", mMatchStartTime);
+			callableStatement.setString("mHomeOrAway", mHomeOrAway);		
+			callableStatement.executeQuery();
+			}
+		catch(SQLException e){
+			e.printStackTrace();
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}
+		}
 	
 	public void getMatchDB(int MatchId){
 		NavestockDbConnection connObj = new NavestockDbConnection();
@@ -70,15 +77,18 @@ public class Match {
 				this.ground = rs.getString("Ground");
 				this.groundPostCode = rs.getString("GroundPostCode");
 				this.homeOrAway = rs.getString("HomeOrAway");
-			}
-		} catch (SQLException e) {
+				}
+			} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}	
 		}
-		
-
-		
-	}
 	
 	/*
 	 * Getter and Setter methods
