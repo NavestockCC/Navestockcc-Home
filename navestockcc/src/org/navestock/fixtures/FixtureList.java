@@ -20,8 +20,9 @@ public class FixtureList {
 			ResultSet rs;
 			try {
 				rs = conn.createStatement().executeQuery(SQL);
-				rs.first();
-				if (rs != null){
+				
+				if (rs.next()){
+					rs.first();
 					do {
 						Fixture fixturedetails = new Fixture(rs.getInt("idMatch"), rs.getInt("NavestockTeamId"), rs.getString("NavestockTeamName"), rs.getInt("OppositionTeamId"), 
 								rs.getString("OppositionTeamName"), rs.getString("MatchType"), rs.getString("HomeOrAway") ,rs.getDate("MatchDate"), 
@@ -30,7 +31,7 @@ public class FixtureList {
 								rs.getInt("OppositionRuns"), rs.getInt("OppositionWickets"), rs.getInt("idTeamWinning") , rs.getString("ResultDescription"), rs.getString("WinningTeamName"));
 						FixtureList.add(fixturedetails);
 					} while (rs.next());				
-				   } 
+				   }
 				 } 
 			catch (SQLException e) {
 				e.printStackTrace();

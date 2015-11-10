@@ -96,10 +96,9 @@ public class MatchListWidget extends SimpleTagSupport {
 			
 			FixtureList fixturelst = new FixtureList(getSQL(GamesToDisplay));			
 			
-			if(fixturelst == null){
-				out.println("<p>No future fixtures scheduled.</p>");
+			if(fixturelst == null || fixturelst.getSize() == 0){
+				out.println("<p>No scheduled fixtures at present.</p>");
 			 }else{
-				 
 					SimpleDateFormat matchDateFormat = new SimpleDateFormat("MMMM dd, yyyy");
 						String teamNme = "";
 							
