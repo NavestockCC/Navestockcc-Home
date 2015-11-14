@@ -67,5 +67,17 @@
 			<rtexprvalue>true</rtexprvalue>
     	</attribute>
 	</tag>
+	
+	<tag>
+		<name>PlayerListDataTable</name>
+		<tag-class>org.navestock.ctags.PlayerListDataTable</tag-class>
+		<body-content>empty</body-content>
+		<description>HTML Script creating data table of player list.</description>
+		<attribute>
+       		<name>teamId</name>
+       		<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+	</tag>
 
 </taglib>

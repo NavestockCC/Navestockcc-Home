@@ -23,6 +23,12 @@
 				</div>
 				<div class='right_panel'>
 				<a href="PlayersWanted.jsp"><img class='players_wanted_img' src='img/PlayersWantedRedv1.png'></a>
+					<div class='right_panel_widgets green'>
+					<div class='panel_widget_menu green'>
+						<p class='panel_widget_menu_item_select green'>Stats</p>
+					</div>
+						<navwidgets:PlayerListDataTable teamId="${param['tId']}"/>
+					</div>
 				</div>
 			</div>
 		</div>	

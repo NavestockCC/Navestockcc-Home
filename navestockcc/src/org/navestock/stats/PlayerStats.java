@@ -64,16 +64,16 @@ public class PlayerStats {
 	public String getResult(){
 		String RsD = null;
 		
-		RsD = "<table>";
-		RsD = RsD + "<tr><td>" + this.OppositionName + " " + this.oppositionRuns + "/" + this.oppositionWickets + "</td></tr>";
-		RsD = RsD + "<tr><td>" + this.TeamName + " " + this.navestockRuns + "/" + this.navestockWickets + "</td></tr>";
+		RsD = "<table style=\"border:none;\">";
+		RsD = RsD + "<tr><td style=\"border:none;\">" + this.OppositionName + " " + this.oppositionRuns + "/" + this.oppositionWickets + "</td></tr>";
+		RsD = RsD + "<tr><td style=\"border:none;\">" + this.TeamName + " " + this.navestockRuns + "/" + this.navestockWickets + "</td></tr>";
 		
 		if(this.idTeamWinning > 0){
-			RsD = RsD + "<tr><td>" + this.WinningTeamName + " won by " + this.ResultDescription + "</td></tr>";
+			RsD = RsD + "<tr><td style=\"border:none;\">" + this.WinningTeamName + " won by " + this.ResultDescription + "</td></tr>";
 		}else if(this.idTeamWinning == -3){ 
-			RsD = RsD + "<tr><td>" + "Draw" + "</td></tr>";
+			RsD = RsD + "<tr><td style=\"border:none;\">" + "Draw" + "</td></tr>";
 		} else{
-			RsD = RsD + "<tr><td>" + this.WinningTeamName + " " + this.ResultDescription + "</td></tr>";
+			RsD = RsD + "<tr><td style=\"border:none;\">" + this.WinningTeamName + " " + this.ResultDescription + "</td></tr>";
 		}
 		RsD = RsD + "</table>";
 		

@@ -8,11 +8,13 @@ import java.util.List;
 
 import org.navestock.dbcom.NavestockDbConnection;
 import org.navestock.stats.PlayerStats;
+import org.navestock.stats.PlayerList;
 
 public class PlayerStatsServices {
 	
-	public static List<PlayerStats> StatsPerPlayer = new ArrayList<PlayerStats>();
+	public List<PlayerStats> StatsPerPlayer = new ArrayList<PlayerStats>();
 	public List<BattingStats> playerBattingStats = new ArrayList<BattingStats>();
+	public List<PlayerList> playersList = new ArrayList<PlayerList>();
 
 	public PlayerStatsServices() {
 		// TODO Auto-generated constructor stub
@@ -96,6 +98,33 @@ public class PlayerStatsServices {
 		    }
 		return playerBattingStats;		
 	}
+	
+	
+//Generate a list of player per year, sorted per year per firstname	
+	public List<PlayerList> getPlayerList(int idTeam){
+		List<PlayerList> playersList = new ArrayList<PlayerList>();
+		
+		NavestockDbConnection connObj = new NavestockDbConnection();
+		Connection conn = connObj.getNavestockDbConnection();
+		ResultSet rs;
+		
+		try {
+			rs = conn.createStatement().executeQuery(SQLPlayerList(idTeam));
+				while (rs.next()) {
+					PlayerList sc = new PlayerList(rs.getInt("idPlayer"), rs.getString("Firstname"), rs.getString("Lastname"), rs.getInt("MatchCount"), rs.getString("Syear"));
+					playersList.add(sc);
+				}	
+			} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			}
+		finally{
+			if(conn!=null){
+				connObj.closeNavestockDbConnection(conn);
+				}
+			}
+		return playersList;
+	}
 
 
 
@@ -133,7 +162,22 @@ public class PlayerStatsServices {
 		return BuildSql;
 	}
 
+	private String SQLPlayerList(int idTeam){
+		String BuildSql = null;
 
+		BuildSql = "SELECT";
+		BuildSql = BuildSql + " t2.idPlayer,";
+		BuildSql = BuildSql + " t3.Firstname,";
+		BuildSql = BuildSql + " t3.Lastname,";
+		BuildSql = BuildSql + " COUNT(*) as MatchCount,";
+		BuildSql = BuildSql + " year(t1.MatchDate) as Syear";
+		BuildSql = BuildSql + " FROM Matches AS t1 INNER JOIN Stats AS t2 ON t1.idMatch = t2.idMatch INNER JOIN Players AS t3 ON t2.idPlayer = t3.idPlayer";
+		BuildSql = BuildSql + " WHERE year(t1.MatchDate) ='2015' and t1.NavestockTeamId =" + idTeam;
+		BuildSql = BuildSql + " GROUP BY Syear, idPlayer";
+		BuildSql = BuildSql + " ORDER BY Syear, t3.Firstname, t3.Lastname";
+
+		return BuildSql;
+	}
 
 }
 
