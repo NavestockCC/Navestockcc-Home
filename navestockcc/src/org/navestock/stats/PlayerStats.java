@@ -1,7 +1,7 @@
 package org.navestock.stats;
 
+import java.util.Calendar;
 import java.util.Date;
-import org.joda.time.DateTime;
 
 
 public class PlayerStats {
@@ -117,8 +117,9 @@ public class PlayerStats {
 	}
 	
 	public int getMatchYear(){
-		DateTime dt = new DateTime(this.MatchDate);
-		return dt.getYear();
+		Calendar c = Calendar.getInstance();
+		c.setTime(this.MatchDate);
+		return c.get(Calendar.YEAR);
 	}
 
 	public int getIdTeamWinning() {
